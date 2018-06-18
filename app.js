@@ -6,6 +6,7 @@ var logger = require('morgan');
 var routes = require('./routes/index');
 var expressHbs  = require('express-handlebars');
 const mongoose = require('mongoose');
+var session = require('express-session');
 
 var app = express();
  
@@ -23,6 +24,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: 'mysupersecret', resave: false, saveUninitialized: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
