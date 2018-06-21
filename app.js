@@ -10,11 +10,11 @@ var session = require('express-session');
 var passport = require('passport');
 var flash = require('connect-flash');
 
-
 var app = express();
  
  
 mongoose.connect('mongodb://localhost:27017/shopping');
+require('./config/passport');
 
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
