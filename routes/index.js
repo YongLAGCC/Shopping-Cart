@@ -26,7 +26,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/user/signup', function(req, res, next ){
-    res.render('user/signup', {csrfToken: req.csrfToken()}); // middleware to protect the sign up
+    var messages = req.flash('error')
+    res.render('user/signup', {csrfToken: req.csrfToken(), messages:messages, hasErrors:messages.length > 0}); // middleware to protect the sign up
       // only click this button that can be worked. 
 });
 
