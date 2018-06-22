@@ -3,7 +3,7 @@ var User = require('../models/user');
 var LocalStrategy = require('passport-local').Strategy; 
 
 passport.serializeUser(function(user, done) { // store user in  session
-    done(null, user,id);
+    done(null, user.id);
 
 })
 
@@ -23,11 +23,11 @@ passport.use('local.signup', new LocalStrategy({
             return done(err); 
         }
         if (user) {
-            return done(null, false, {message: 'Email is already in use!'})
+            return done(null, false, {message: 'Email is already in use!'});
         }
         var newUser = new User(); 
-        newUser.email = email, 
-        newUser.passport = newUser.encryptPassword(password);
+        newUser.email = email;
+        newUser.password = newUser.encryptPassword(password);
             // it wont create a new user, need schema, and bcrypt in user.js 
         newUser.save(function(err, result) {
             if(err) {
