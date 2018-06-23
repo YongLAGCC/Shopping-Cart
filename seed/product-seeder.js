@@ -14,8 +14,8 @@ const products = [
     }),
 
     new Product({
-        imagePath: "https://static1.squarespace.com/static/56d725b88a65e2c48c079abf/56d727fbb4ed3b3236511b37/56de3276fd2119d56bf9e739/1462476563995/alienrageunlimited_pc_review.jpg?format=1500w",
-        title: "<script>alert('You have been hacked');</script>",
+        imagePath: "http://supermariomaker.nintendo.com/assets/img/mario-maker.png",
+        title: "<script>Super Mary</script>",
         description: "Yea, That is for kids", 
         price: 12,    
     }),
