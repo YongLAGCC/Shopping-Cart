@@ -1,13 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var csrf = require('csurf');
-var passport = require ('passport');
+var Cart = require('../models/product');
 
 var Product = require('../models/product');
 
 
-var csrfProtection = csrf(); 
-router.use(csrfProtection);
 
 
 /* GET home page. */
@@ -25,19 +22,20 @@ router.get('/', function(req, res, next) {
 
 });
 
-router.get('/user/signup', function(req, res, next ){
-    var messages = req.flash('error')
-    res.render('user/signup', {csrfToken: req.csrfToken(), messages:messages, hasErrors:messages.length > 0}); // middleware to protect the sign up
-      // only click this button that can be worked. 
+
+router.get('/add-to-cart/:id', function(req, res, next){
+    var productId = req.params.id;
+    var cart = new cart(req.session.cart ? req.session.cart: {items: {}});
+
+    Product.findById(productId, function(err, product) {
+        if(err) {
+            return res.redirect('/');
+        }
+        cart.add(product, product.id);
+        req.session.cart = cart;  
+        console.log(req.session.cart);
+        req.redirect('/');
+    })
 });
 
-router.post('/user/signup', passport.authenticate('local.signup',{
-    successRedirect: '/user/profile', 
-    failureRedirect: '/user/signup', 
-    failureFlash: true
-}));
-
-router.get('/user/profile', function(req, res, next) {
-    res.render('user/profile');
-})
 module.exports = router;
