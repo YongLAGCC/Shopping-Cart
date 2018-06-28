@@ -2,50 +2,60 @@
     <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
         <h1>Checkout</h1>
         <h4> Totle Prices <strong>: ${{totalPrice}} </strong></h4>
+
+        {{!-- <div id="payment-errors" class="alert alert-danger">
+            <h1>error!!!!!!!!</h1>
+        </div> --}}
     </div>
-    <form method="post" action= "/checkout">
+    <form method="post" action= "/checkout" id="checkout-form">
         <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
             <div class="form-row" >
                 <label for="inputEmail4">Full Name</label>
-                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-            </div> 
+                <input type="text" class="form-control" id="card-name" placeholder="Last Name / First Name" required name ="name">
+            </div>     
         </div>
         <div class="form-group">
             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required name="address">
             </div>
         </div>
-        <div class="form-group">
-            <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
-                <label for="inputAddress2">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-            </div>
-        </div>   
+       
         <div class="form-group">
             <div class = "col-sm-2 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputZip">Zip Code</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="*****">
+                <input type="text" class="form-control" id="zip-code" placeholder="*****"  required>
             </div>
         </div>
 
         <div class="form-group">
             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputCardNumber">Card Number</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="----/----/----">
+                <input type="text" class="form-control" id="card-number" placeholder="----/----/----"  required>
             </div>
         </div>
-        <div class="form-group">
-            <div class = "col-sm-2 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
-                <label for="inputDate">Vaild Date</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="MM/YY">
-            </div>
-        </div>
+        
+             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="card-expiry-month">Expiration Month</label>
+                                <input type="text" id="card-expiry-month" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label for="card-expiry-year">Expiration Year</label>
+                                <input type="text" id="card-expiry-year" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             
- <div class="form-group">
+        <div class="form-group">
             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputCvc">CVC</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="***">
+                <input type="text" class="form-control" id="card-cvc" placeholder="***"  required>
             </div>
         </div>
 
@@ -68,5 +78,7 @@
     </form>
 
 </div>
+ 
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript" src="javascripts/checkout.js"></script>
 
-<script src="https://js.stripe.com/v3/"></script>

@@ -50,7 +50,7 @@ router.get('/checkout', function(req, res, next) {
     if(!req.session.cart) {
         res.redirect('shop/checkout');
     }
-    var car = new Cart(req.session.cart);
+    var cart = new Cart(req.session.cart); // ????????????????????????????????
     res.render('shop/checkout', {totalPrice: cart.totalPrice})   
 })
 module.exports = router;
