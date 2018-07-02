@@ -4,15 +4,17 @@ Stripe.setPublishableKey('pk_test_qZngHrVUnKpIfV3Uxisdaqph');
 var $form = $('#checkout-form'); 
 
 $form.submit(function(event) {
-    // $('#payment-errors').addClass('hidden');
+    $('#payment-errors').addClass('hidden');
+    console.log("test whehter works")
 
     $form.find('button').prop('disabled', true); 
     Stripe.card.createToken({
         number: $('#card-number').val(),
         cvc: $('#card-cvc').val(),
-        carddate: $('#card-date').val(),
-        
-        neme: $('#card-name').val()
+        name: $('#card-name').val(),
+        exp_month: $ ("#exp_month").val(),
+        exp_year: $ ("#exp_year").val(),
+
       }, stripeResponseHandler);
       return false; 
  
