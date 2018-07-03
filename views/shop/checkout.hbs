@@ -3,35 +3,35 @@
         <h1>Checkout</h1>
         <h4> Totle Prices <strong>: ${{totalPrice}} </strong></h4>
 
-        <div id="payment-errors" class="alert alert-danger">
-            <h1>error!!!!!!!!</h1>
+        <div id="charge-error" class="alert alert-danger {{#if noError}}hidden{{/if}}">
+            {{errMsg}}
         </div>
     </div>
     <form method="post" action= "/checkout" id="checkout-form">
         <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
             <div class="form-row" >
                 <label for="inputEmail">Full Name</label>
-                <input type="text" class="form-control" id="card-name" placeholder="Last Name / First Name" required name ="name">
+                <input type="text" class="form-control" id="card-name" value ="yong" placeholder="Last Name / First Name" required name ="name">
             </div>     
         </div>
         <div class="form-group">
             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required name="address">
+                <input type="text" class="form-control" id="address" value =" 123 asldkf" placeholder="1234 Main St" required name="address">
             </div>
         </div>
        
         <div class="form-group">
             <div class = "col-sm-2 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputZip">Zip Code</label>
-                <input type="text" class="form-control" id="zip-code" placeholder="*****"  required>
+                <input type="text" class="form-control" id="zip-code" value=" 31212"placeholder="*****"  required>
             </div>
         </div>
 
         <div class="form-group">
             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputCardNumber">Card Number</label>
-                <input type="text" class="form-control" id="card-number" placeholder="----/----/----"  required>
+                <input type="text" class="form-control" id="card-number" value ="4242424242424242" placeholder="----/----/----"  required>
             </div>
         </div>
         
@@ -40,13 +40,13 @@
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label for="exp_month">Expiration Month</label>
-                                <input type="text" id="exp_month" class="form-control" required>
+                                <input type="text" id="exp_month" value = 12 class="form-control" required>
                             </div>
                         </div>
                         <div class="col-xs-6">
                             <div class="form-group">
                                 <label for="exp_year">Expiration Year</label>
-                                <input type="text" id="exp_year" class="form-control" required>
+                                <input type="text" id="exp_year" value ="2019" class="form-control" required>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
         <div class="form-group">
             <div class = "col-sm-6 col-sm-4 col-md-offset-4 col-sm-offset-3   "> 
                 <label for="inputCvc">CVC</label>
-                <input type="text" class="form-control" id="card-cvc" placeholder="***"  required>
+                <input type="text" class="form-control" id="card-cvc" value="123" placeholder="***"  required>
             </div>
         </div>
 
@@ -69,12 +69,12 @@
         </div>
         <div class="form-group row" >
             <div class = "col-sm-6 col-sm-2 col-md-offset-7 col-sm-offset-3   "> 
-            <div class="col-sm-10">
-                <hr>
-            <button type="submit" class="btn btn-primary">Palce Order</button>
-            </div>
+                <div class="col-sm-10">
+                    <hr>
+                <button type="submit" class="btn btn-success">Palce Order</button>
+                </div>
             </div>      
-        </div>
+        </div>  
     </form>
 
 </div>

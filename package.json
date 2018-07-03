@@ -26,7 +26,7 @@
     "passport-local": "^1.0.0",
     "password": "^0.1.1",
     "peer": "^0.2.8",
-    "stripe": "^4.7.0"
+    "stripe": "^4.25.0"
   },
   "devDependencies": {
     "bootstrap-css": "^4.0.0-alpha.5"

@@ -8,15 +8,16 @@ var Product = require('../models/product');
 /* GET home page. */
 
 router.get('/', function(req, res, next) {
-  Product.find(null,  function (err, docs) {   // find product from database 
-   // console.log("Finding docs: ", docs);
+    var successMsg = req.flash('success')[0];
+    Product.find(null,  function (err, docs) {   // find product from database 
+    // console.log("Finding docs: ", docs);
     var productChunks = [];
     var chunkSize = 3;
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
-    res.render('shop/index', { title: 'Shopping Cart', products: productChunks }); 
-  }); // products are showing to the clients on screen
+    res.render('shop/index', { title: 'Shopping Cart', products: productChunks, successMsg: successMsg,noMessages: !successMsg}); 
+    }); // products are showing to the clients on screen
 
 });
 
@@ -51,6 +52,38 @@ router.get('/checkout', function(req, res, next) {
         res.redirect('shop/checkout');
     }
     var cart = new Cart(req.session.cart); // ????????????????????????????????
-    res.render('shop/checkout', {totalPrice: cart.totalPrice})   
+    var errMsg = req.flash('error')[0]; 
+    res.render('shop/checkout', {totalPrice: cart.totalPrice, errMsg: errMsg, noError: !errMsg});   
 })
+
+router.post('/checkout', function(req, res, next) {
+
+    if(!req.session.cart) {
+        return res.redirect('/shopping-cart');    
+    }
+    var cart = new Cart(req.session.cart); 
+    var stripe = require("stripe")("sk_test_qrCR4JvqbisyLK9TeqDnpVSO");
+
+    // Token is created using Checkout or Elements!
+    // Get the payment token ID submitted by the form:
+    //const token = request.body.stripeToken; // Using Express
+
+    stripe.charges.create({
+        amount: cart.totalPrice*100,
+        currency: 'usd',
+        description: 'Test charge',
+        source: req.body.stripeToken,
+        }, function(err, charge) {
+            if (err) {
+                req.flash('error', err.message);
+                return res.redirect('/checkout')
+            }
+            req.flash('success', 'Successfully made this transaction.');
+            req.cart = null; 
+            req.redirect('/');
+        });
+
+});
+
+
 module.exports = router;
