@@ -79,7 +79,7 @@ router.post('/checkout', function(req, res, next) {
                 return res.redirect('/checkout')
             }
             req.flash('success', 'Successfully made this transaction.');
-            req.cart = null; 
+            req.session.cart = null; 
             req.redirect('/');
         });
 
