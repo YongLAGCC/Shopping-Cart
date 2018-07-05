@@ -3,7 +3,7 @@ var router = express.Router();
 var Cart = require('../models/cart');
 
 var Product = require('../models/product');
-
+var Order = require('../models/order');
 
 /* GET home page. */
 
@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
     for (var i = 0; i < docs.length; i += chunkSize) {
         productChunks.push(docs.slice(i, i + chunkSize));
     }
-    res.render('shop/index', { title: 'Shopping Cart', products: productChunks, successMsg: successMsg,noMessages: !successMsg}); 
+    res.render('shop/index', { title: 'Shopping Cart', products: productChunks, successMsg: successMsg, noMessages: !successMsg}); 
     }); // products are showing to the clients on screen
 
 });
@@ -49,7 +49,7 @@ router.get('/shopping-cart', function(req, res, next) {
 
 router.get('/checkout', function(req, res, next) {
     if(!req.session.cart) {
-        res.redirect('shop/checkout');
+        return res.redirect('shop/checkout');
     }
     var cart = new Cart(req.session.cart); // ????????????????????????????????
     var errMsg = req.flash('error')[0]; 
@@ -67,10 +67,10 @@ router.post('/checkout', function(req, res, next) {
     // Token is created using Checkout or Elements!
     // Get the payment token ID submitted by the form:
     //const token = request.body.stripeToken; // Using Express
-
+    console.log(cart, req, res)
     stripe.charges.create({
         amount: cart.totalPrice*100,
-        currency: 'usd',
+        currency: "usd",
         description: 'Test charge',
         source: req.body.stripeToken,
         }, function(err, charge) {
@@ -78,12 +78,20 @@ router.post('/checkout', function(req, res, next) {
                 req.flash('error', err.message);
                 return res.redirect('/checkout')
             }
-            req.flash('success', 'Successfully made this transaction.');
-            req.session.cart = null; 
-            req.redirect('/');
+            var order = new Order({
+                user: req.user, 
+                cart: cart, 
+                address: req.body.address, 
+                name: req.body.name, 
+                paymentId: charge.id,
+            });
+            order.save(function(err, result) {
+                req.flash('success', 'Successfully made this transaction.');
+                req.session.cart = null; 
+                res.redirect('/');
+            });
         });
 
 });
-
 
 module.exports = router;
