@@ -5,7 +5,7 @@ var Cart = require('../models/cart');
 var Product = require('../models/product');
 var Order = require('../models/order');
 
-/* GET home page. */
+/* GET home page. */     
 
 router.get('/', function(req, res, next) {
     var successMsg = req.flash('success')[0];
@@ -20,7 +20,6 @@ router.get('/', function(req, res, next) {
     }); // products are showing to the clients on screen
 
 });
-
 
 router.get('/add-to-cart/:id', function(req, res, next){
     var productId = req.params.id;
@@ -47,7 +46,7 @@ router.get('/shopping-cart', function(req, res, next) {
 })
 
 
-router.get('/checkout', function(req, res, next) {
+router.get('/checkout', isLoggedIn, function(req, res, next) {
     if(!req.session.cart) {
         return res.redirect('shop/checkout');
     }
@@ -56,7 +55,7 @@ router.get('/checkout', function(req, res, next) {
     res.render('shop/checkout', {totalPrice: cart.totalPrice, errMsg: errMsg, noError: !errMsg});   
 })
 
-router.post('/checkout', function(req, res, next) {
+router.post('/checkout', isLoggedIn, function(req, res, next) {
 
     if(!req.session.cart) {
         return res.redirect('/shopping-cart');    
@@ -71,12 +70,12 @@ router.post('/checkout', function(req, res, next) {
     stripe.charges.create({
         amount: cart.totalPrice*100,
         currency: "usd",
-        description: 'Test charge',
+        description: 'Test Charge',
         source: req.body.stripeToken,
         }, function(err, charge) {
             if (err) {
                 req.flash('error', err.message);
-                return res.redirect('/checkout')
+                return res.redirect('/checkout');
             }
             var order = new Order({
                 user: req.user, 
@@ -95,3 +94,11 @@ router.post('/checkout', function(req, res, next) {
 });
 
 module.exports = router;
+
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated() ) {
+        return next(); 
+    }
+    req.session.oldUrl = req.url;
+    res.redirect('/user/signin');
+}

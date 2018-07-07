@@ -21,7 +21,8 @@
             <input type="hidden", name="_csrf" value="{{ csrfToken }}">
             <button type="sumbit", class="btn btn-primary">Sign In</button>
         </form>
-        {{ csrfToken }}
+        {{!-- {{ csrfToken }} --}}
+        <p>Don't have an account? <a href="/user/signup">Sign up for getting one!</a></p>
     </div>
 </div>
 
