@@ -1,15 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var Cart = require('../models/cart');
-
 var Product = require('../models/product');
 var Order = require('../models/order');
 
-/* GET home page. */     
 
 router.get('/', function(req, res, next) {
     var successMsg = req.flash('success')[0];
-    Product.find(null,  function (err, docs) {   // find product from database 
+    Product.find( function (err, docs) {   // find product from database 
     // console.log("Finding docs: ", docs);
     var productChunks = [];
     var chunkSize = 3;
@@ -23,19 +21,38 @@ router.get('/', function(req, res, next) {
 
 router.get('/add-to-cart/:id', function(req, res, next){
     var productId = req.params.id;
-    //check if the car propoty exist, otherwise, it will create a empty object
-    var cart = new Cart(req.session.cart ? req.session.cart: {});
 
+    //check if the car propoty exist, otherwise, it will create a empty object
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
     Product.findById(productId, function(err, product) {
         if(err) {
             return res.redirect('/');
         }
         cart.add(product, product.id);
         req.session.cart = cart; 
-        console.log('************',req.session.cart);
+        console.log(  req.session.cart );
         res.redirect('/');
     });
 });
+
+router.get('/reduce/:id', function(req, res, next) {
+    var productId = req.params.id; 
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    cart.reduceByOne(productId); 
+    req.session.cart = cart; 
+    res.redirect('/shopping-cart');
+ 
+})
+
+router.get('/remove/:id', function(req, res, next) {
+    var productId = req.params.id; 
+    var cart = new Cart(req.session.cart ? req.session.cart : {});
+
+    cart.removeItem(productId); 
+    req.session.cart = cart; 
+    res.redirect('/shopping-cart'); 
+})
 
 router.get('/shopping-cart', function(req, res, next) {
     if(!req.session.cart) {
@@ -61,12 +78,13 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
         return res.redirect('/shopping-cart');    
     }
     var cart = new Cart(req.session.cart); 
+
     var stripe = require("stripe")("sk_test_qrCR4JvqbisyLK9TeqDnpVSO");
 
     // Token is created using Checkout or Elements!
     // Get the payment token ID submitted by the form:
     //const token = request.body.stripeToken; // Using Express
-    console.log(cart, req, res)
+
     stripe.charges.create({
         amount: cart.totalPrice*100,
         currency: "usd",
@@ -96,8 +114,8 @@ router.post('/checkout', isLoggedIn, function(req, res, next) {
 module.exports = router;
 
 function isLoggedIn(req, res, next) {
-    if(req.isAuthenticated() ) {
-        return next(); 
+    if (req.isAuthenticated()) {
+        return next();
     }
     req.session.oldUrl = req.url;
     res.redirect('/user/signin');
