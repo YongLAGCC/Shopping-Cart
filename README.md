@@ -38,18 +38,23 @@
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+
+- Make sure your load machine has NPM, Node.js and MogoDB installed. Otherwise see : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
+- and password.js, Stripe API keys ready.  See  
+```
+https://stripe.com/docs/keys
+```
+
+
+### Installing
+
 - Open Terminal or PowerShell, type 
 ```
 git clone https://github.com/YongLAGCC/Shopping-Cart.git 
 ```
 <img width="587" alt="Screen Shot 2020-07-09 at 9 55 22 PM" src="https://user-images.githubusercontent.com/24738821/87111223-ce192b80-c236-11ea-89b7-3a4c80854e1e.png">
-![setup3](file:///Users/yong.zhou/Desktop/Screen%20Shot%202020-07-09%20at%209.55.22%20PM.png)
-### To Start
-- Make sure your load machine has NPM, Node.js and MogoDB installed. Otherwise see : https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
-- and password.js, Stripe API keys ready.  See  
 
-https://stripe.com/docs/keys
-### Installing
+
 - Use editer to open the downloaded folder 
 - Open Terminal or PowerShell, and direct to the folder, then type 
 ```
@@ -64,7 +69,9 @@ npm start
 ```
 
 <img width="581" alt="Screen Shot 2020-07-09 at 10 58 10 PM" src="https://user-images.githubusercontent.com/24738821/87111596-ba21f980-c237-11ea-8ecd-6201a524e316.png">
-## 🔧 ## Running the tests <a name = "tests"></a>
+
+### 🔧 Running the tests <a name = "tests"></a>
+
 - Open the Chrome to type  
 ```
 http://localhost:3000/
@@ -75,7 +82,7 @@ http://localhost:3000/
 - click the items you like, be ready for your Credit card to pay for it!! 
 
 <img width="935" alt="Screen Shot 2020-07-09 at 11 01 03 PM" src="https://user-images.githubusercontent.com/24738821/87111743-19800980-c238-11ea-85ad-af402b36d18e.png">
-### ⛏️ - And coding style
+### ⛏️ And coding style
 
 
 <img width="335" alt="Screen Shot 2020-07-09 at 11 15 02 PM" src="https://user-images.githubusercontent.com/24738821/87112813-c8254980-c23a-11ea-916b-af67200dd08b.png">
