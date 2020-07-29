@@ -46,7 +46,7 @@ https://stripe.com/docs/keys
 ```
 
 
-### Installing
+### Installing(This sample of shopping cart can used by everyone)
 
 - Open Terminal or PowerShell, type 
 ```
